@@ -9,6 +9,7 @@
 #include<iostream>
 #include<stack>
 #include<cctype>
+#include<cstring>
 
 #define maxn 100001
 using namespace std;
