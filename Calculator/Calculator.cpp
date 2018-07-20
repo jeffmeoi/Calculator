@@ -1,8 +1,12 @@
 /*
 *	Project:Integer Calculator
-*	Date:2018/7/20		Time:1:48.
+*	Date:2018/7/20		Time:14:55.
 *	author:Jeffmeoi.
-*	Õâ·İ´úÂë²¢Ã»ÓĞÍêÉÆ,Ã»ÓĞ´¦Àí¹ı¶ÁÈë´íÎóµÄÇé¿ö£¬ÓÉÓÚÃ÷ÌìÒªÈ¥Õ÷±øÌå¼ì£¬ÏÈË¯ÁË233¡£
+*	è¿™é‡Œè®°å½•ä¸€ä¸‹å‘ï¼Œ
+*	å‘1ï¼šUI
+*	å‘2ï¼šUnicode
+*	å‘3ï¼šå¼‚å¸¸å¤„ç†
+*	END
 */
 #include"stdafx.h"
 #include<cstdio>
@@ -17,7 +21,7 @@ using namespace std;
 char str[maxn], str2[maxn];
 int cur, len;
 
-int priority(char signal) {			/*ÅĞ¶ÏÔËËãµÄÓÅÏÈ¼¶*/
+int priority(char signal) {			/*åˆ¤æ–­è¿ç®—çš„ä¼˜å…ˆçº§*/
 	switch (signal)
 	{
 	case '+':
@@ -26,12 +30,12 @@ int priority(char signal) {			/*ÅĞ¶ÏÔËËãµÄÓÅÏÈ¼¶*/
 	case '*':
 	case '/':
 		return 2;
-	default:					/*defaultÖĞ¼´ÅĞ¶¨¡®(¡¯ÓÅÏÈ¼¶Îª0*/
+	default:					/*defaultä¸­å³åˆ¤å®šâ€˜(â€™ä¼˜å…ˆçº§ä¸º0*/
 		return 0;
 	}
 }
 
-double cal(double a, double b, char sign) {		/*¹ËÃûË¼Òå¼´ÔËËã*/
+double cal(double a, double b, char sign) {		/*é¡¾åæ€ä¹‰å³è¿ç®—*/
 
 	switch (sign)
 	{
@@ -49,7 +53,7 @@ double cal(double a, double b, char sign) {		/*¹ËÃûË¼Òå¼´ÔËËã*/
 
 }
 
-int input() {			/*ÊäÈëÒ»ĞĞ²¢½«¿Õ¸ñµÈÖÆ±í·ûÉ¾È¥*/
+int input() {			/*è¾“å…¥ä¸€è¡Œå¹¶å°†ç©ºæ ¼ç­‰åˆ¶è¡¨ç¬¦åˆ å»*/
 
 	if (NULL == gets_s(str2,maxn))
 		return 0;
@@ -80,17 +84,17 @@ int solve() {
 
 	while (cur < len) {
 		//cout << cur << endl;
-		if (isalnum(str[cur])) {			/*Èç¹ûÏÂ±êÎªcur´¦µÄ×Ö·ûÎªÊı×Ö×Ö·û£¬Ôò¶ÁÈëÊı×Ö*/
+		if (isalnum(str[cur])) {			/*å¦‚æœä¸‹æ ‡ä¸ºcurå¤„çš„å­—ç¬¦ä¸ºæ•°å­—å­—ç¬¦ï¼Œåˆ™è¯»å…¥æ•°å­—*/
 			sscanf_s(str + cur, "%lf", &tempNum);
 			nums.push((double)tempNum);
-			while (isalnum(str[++cur]) || str[cur] == '.');	/*ÒÆ¶¯¹â±êÖÁµÚÒ»¸ö·ÇÊı×Ö×Ö·û´¦*/
+			while (isalnum(str[++cur]) || str[cur] == '.');	/*ç§»åŠ¨å…‰æ ‡è‡³ç¬¬ä¸€ä¸ªéæ•°å­—å­—ç¬¦å¤„*/
 		}
 		else {
-			if (str[cur] == '(') {			/*¶ÁÈë×óÀ¨ºÅ*/
+			if (str[cur] == '(') {			/*è¯»å…¥å·¦æ‹¬å·*/
 				signals.push('(');
 
 			}
-			else if (str[cur] == ')') {		/*¶ÁÈëÓÒÀ¨ºÅºó£¬ÔòÏÈ½øĞĞ¡°£¨£©¡±ÄÚµÄÔËËãÔÙ½«£¨µ¯³öÕ»ÖĞ*/
+			else if (str[cur] == ')') {		/*è¯»å…¥å³æ‹¬å·åï¼Œåˆ™å…ˆè¿›è¡Œâ€œï¼ˆï¼‰â€å†…çš„è¿ç®—å†å°†ï¼ˆå¼¹å‡ºæ ˆä¸­*/
 
 				while (!signals.empty() && signals.top() != '(') {
 					//cout << nums.top() << "  " << signals.top() << endl;
@@ -114,16 +118,16 @@ int solve() {
 					}
 
 				}
-				if (signals.top() == '(')		/*½«¡®£¨¡¯µ¯³öÕ»ÖĞ*/
+				if (signals.top() == '(')		/*å°†â€˜ï¼ˆâ€™å¼¹å‡ºæ ˆä¸­*/
 					signals.pop();
 
 			}
 			else if (str[cur] == '+' || str[cur] == '-' || str[cur] == '*' || str[cur] == '/') {
 				//cout << str[cur] << "  " << priority(str[cur]) << "  " << signals.top() << "  " << priority(signals.top()) << endl;
-				if (signals.empty() || priority(str[cur]) > priority(signals.top())) {		/*Èç¹ûĞÂ¶ÁÈëµÄ·ûºÅÓÅÏÈ¼¶´óÓÚÕ»¶¥·ûºÅµÄÓÅÏÈ¼¶£¬Ôò½«ĞÂ·ûºÅÑ¹ÈëÕ»ÖĞ*/
+				if (signals.empty() || priority(str[cur]) > priority(signals.top())) {		/*å¦‚æœæ–°è¯»å…¥çš„ç¬¦å·ä¼˜å…ˆçº§å¤§äºæ ˆé¡¶ç¬¦å·çš„ä¼˜å…ˆçº§ï¼Œåˆ™å°†æ–°ç¬¦å·å‹å…¥æ ˆä¸­*/
 					signals.push(str[cur]);
 				}
-				else {			/*·ñÔò£¬ÏÈ½«·ûºÅÕ»ÖĞÕ»¶¥µÄ·ûºÅºÍÊı×ÖÕ»ÖĞÕ»¶¥µÄÁ½¸öÊı×Öµ¯³ö²¢½øĞĞÔËËãºóÑ¹ÈëÊı×ÖÕ»ÖĞ£¬ÔÙ½«·ûºÅÑ¹ÈëÕ»ÖĞ*/
+				else {			/*å¦åˆ™ï¼Œå…ˆå°†ç¬¦å·æ ˆä¸­æ ˆé¡¶çš„ç¬¦å·å’Œæ•°å­—æ ˆä¸­æ ˆé¡¶çš„ä¸¤ä¸ªæ•°å­—å¼¹å‡ºå¹¶è¿›è¡Œè¿ç®—åå‹å…¥æ•°å­—æ ˆä¸­ï¼Œå†å°†ç¬¦å·å‹å…¥æ ˆä¸­*/
 
 					double numA, numB, numC;
 					char sign;
@@ -152,7 +156,7 @@ int solve() {
 
 	}
 
-	while (!signals.empty()) {			/*½øĞĞÍêÉÏÊö¹ı³Ìºó£¬ËùÓĞµÄÔËËã±ØÈ»ÔÚÍ¬Ò»ÓÅÏÈ¼¶ÉÏ£¬ËùÒÔÖ»ĞèÒª²»¶ÏµØµ¯³öÊı×ÖºÍ·ûºÅ½øĞĞÔËËã¼´¿ÉµÃ³öÕıÈ·´ğ°¸*/
+	while (!signals.empty()) {			/*è¿›è¡Œå®Œä¸Šè¿°è¿‡ç¨‹åï¼Œæ‰€æœ‰çš„è¿ç®—å¿…ç„¶åœ¨åŒä¸€ä¼˜å…ˆçº§ä¸Šï¼Œæ‰€ä»¥åªéœ€è¦ä¸æ–­åœ°å¼¹å‡ºæ•°å­—å’Œç¬¦å·è¿›è¡Œè¿ç®—å³å¯å¾—å‡ºæ­£ç¡®ç­”æ¡ˆ*/
 		double numA, numB, numC;
 		char sign;
 		numB = nums.top();
@@ -176,12 +180,12 @@ int solve() {
 
 int main()
 {
-	printf("ÇëÊäÈë±í´ïÊ½£º'()'½öÄÜÎªÓ¢ÎÄ·ûºÅ£º\n");
+	printf("è¯·è¾“å…¥è¡¨è¾¾å¼ï¼š'()'ä»…èƒ½ä¸ºè‹±æ–‡ç¬¦å·ï¼š\n");
 	while (input() == 1) {
 
 		solve();
 
-		printf("ÇëÊäÈë±í´ïÊ½£º'()'½öÄÜÎªÓ¢ÎÄ·ûºÅ£º\n");
+		printf("è¯·è¾“å…¥è¡¨è¾¾å¼ï¼š'()'ä»…èƒ½ä¸ºè‹±æ–‡ç¬¦å·ï¼š\n");
 
 
 	}
